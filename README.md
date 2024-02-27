@@ -1,6 +1,6 @@
 # kermit 🟢📷💻
 
-Cloudflare Workers Puppeteer (Browser Rendering API) experiments and micro-projects
+Cloudflare Workers Puppeteer (Browser Rendering API) experiments and micro-projects | [See docs](https://developers.cloudflare.com/browser-rendering/)
 
 ## Examples / Projects
 - [Durable Object Screenshot Taker](./examples/durable-object-screenshot-taker/)
