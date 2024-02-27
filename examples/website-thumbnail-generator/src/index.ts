@@ -59,10 +59,6 @@ export class Browser {
 	 * @returns Response object
 	 */
 	async fetch(request: Request): Promise<Response> {
-		// screen resolutions to test out
-		const width = [1920, 1366, 1536, 360, 414]
-		const height = [1080, 768, 864, 640, 896]
-
 		// use the current date and time to create a folder structure for R2
 		const nowDate = new Date()
 		var coeff = 1000 * 60 * 5
@@ -104,19 +100,16 @@ export class Browser {
 
 		const page = await this.browser.newPage();
 
-		// take screenshots of each screen size
-		for (let i = 0; i < width.length; i++) {
-			await page.setViewport({ width: width[i], height: height[i] });
-			await page.goto(url);
-			await page.waitForNetworkIdle({ idleInsecure: 5000, idle: 5000, timeout: 10000 });
-			const fileName = "screenshot_" + width[i] + "x" + height[i]
-			const sc = await page.screenshot({ 
-				path: fileName + ".jpg",
-				captureBeyondViewport: false
-			});
+		// take screenshot
+		await page.setViewport({ width: 1920, height: 1080 });
+		await page.goto(url); 
+		await page.waitForNetworkIdle({ idleInsecure: 5000, idle: 5000, timeout: 10000 });
+		const sc = await page.screenshot({ 
+			path: "screenshot.jpg",
+			captureBeyondViewport: false
+		});
 
-			await this.env.BUCKET.put(urlSafeUrl + "/" + folder + "/" + fileName + ".jpg", sc);
-		}
+		await this.env.BUCKET.put(urlSafeUrl + "/" + folder + "/" + "screenshot.jpg", sc);
 
 		// Close tab when there is no more work to be done on the page
 		await page.close();
